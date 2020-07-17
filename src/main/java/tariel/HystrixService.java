@@ -1,6 +1,7 @@
 package tariel;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -12,7 +13,8 @@ import org.springframework.web.client.RestTemplate;
 @EnableCircuitBreaker
 public class HystrixService {
 
-    private final String URL = "http://50.19.219.141:9000/javaee/api/address";
+    @Value("${producer.url}")
+    private String URL;
 
     @HystrixCommand(fallbackMethod = "getDefaultAddress")
     public String getAddressFromAWS() {
